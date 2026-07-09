@@ -3,11 +3,13 @@ import { usePatient } from './PatientContext';
 import { 
   FileText, 
   Printer, 
-  Trash2
+  Trash2,
+  Download,
+  Upload
 } from 'lucide-react';
 
 export const ReportCenter: React.FC = () => {
-  const { patient, reports, clearAllReports } = usePatient();
+  const { patient, reports, clearAllReports, restoreFullSession, restoreReportsOnly } = usePatient();
   const reportKeys = Object.keys(reports);
 
   const handlePrint = () => {
@@ -57,7 +59,33 @@ export const ReportCenter: React.FC = () => {
       reports
     };
     const safeName = (patient.name || 'patient').replace(/[^a-z0-9]/gi, '_');
-    downloadJSON(reportsData, `PsychScaler_Reports_${safeName}_${new Date().toISOString().slice(0,10)}.json`);
+
+  const handleRestoreBackup = (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (data.patient && data.reports) {
+          restoreFullSession(data);
+          alert("Full session restored successfully! The page will reflect the loaded data.");
+        } else if (data.reports) {
+          restoreReportsOnly(data);
+          alert("Reports restored successfully!");
+        } else {
+          alert("Invalid backup file. The file must contain patient and/or reports data.");
+        }
+      } catch (err) {
+        alert("Failed to read the backup file. Make sure it is a valid PsychScaler JSON export.");
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = ""; // reset input
+  };
+
+      downloadJSON(reportsData, `PsychScaler_Reports_${safeName}_${new Date().toISOString().slice(0,10)}.json`);
   };
 
   return (
@@ -98,6 +126,46 @@ export const ReportCenter: React.FC = () => {
             <Printer size={16} />
             <span>Print / Save as PDF</span>
           </button>
+          <button 
+            onClick={handleDownloadFullSession} 
+            className="btn btn-secondary"
+            disabled={reportKeys.length === 0}
+            style={{ padding: "0.5rem 1rem" }}
+          >
+            <Download size={16} />
+            <span>Download Full Session</span>
+          </button>
+
+          <button 
+            onClick={handleDownloadReportsOnly} 
+            className="btn btn-secondary"
+            disabled={reportKeys.length === 0}
+            style={{ padding: "0.5rem 1rem" }}
+          >
+            <Download size={16} />
+            <span>Download Reports Only</span>
+          </button>
+
+          <label style={{ 
+            display: "inline-flex", 
+            alignItems: "center", 
+            gap: "0.25rem",
+            padding: "0.5rem 1rem",
+            background: "var(--bg-secondary)",
+            border: "1px solid var(--border)",
+            borderRadius: "6px",
+            cursor: "pointer",
+            fontSize: "0.875rem"
+          }}>
+            <Upload size={16} />
+            <span>Restore from Backup</span>
+            <input 
+              type="file" 
+              accept=".json" 
+              style={{ display: "none" }} 
+              onChange={handleRestoreBackup}
+            />
+          </label>
         </div>
       </div>
 

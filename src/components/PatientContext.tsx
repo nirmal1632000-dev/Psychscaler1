@@ -9,6 +9,9 @@ interface PatientContextType {
   saveReport: (scaleId: string, report: any) => void;
   deleteReport: (scaleId: string) => void;
   clearAllReports: () => void;
+  // New for hospital backup/restore
+  restoreFullSession: (data: any) => void;
+  restoreReportsOnly: (data: any) => void;
 }
 
 const defaultPatient: PatientDetails = {
@@ -72,6 +75,31 @@ export const PatientProvider: React.FC<{ children: React.ReactNode }> = ({ child
     setReports({});
   };
 
+  // === Restore functions for hospital staff ===
+  const restoreFullSession = (data: any) => {
+    if (data.patient) {
+      setPatient({ ...defaultPatient, ...data.patient });
+    }
+    if (data.reports) {
+      setReports(data.reports);
+    }
+  };
+
+  const restoreReportsOnly = (data: any) => {
+    if (data.reports) {
+      setReports(data.reports);
+    }
+    if (data.patient) {
+      setPatient(prev => ({
+        ...prev,
+        name: data.patient.name || prev.name,
+        caseId: data.patient.caseId || prev.caseId,
+        assessmentDate: data.patient.assessmentDate || prev.assessmentDate,
+        clinicianName: data.patient.clinicianName || prev.clinicianName,
+      }));
+    }
+  };
+
   return (
     <PatientContext.Provider value={{
       patient,
@@ -80,7 +108,9 @@ export const PatientProvider: React.FC<{ children: React.ReactNode }> = ({ child
       reports,
       saveReport,
       deleteReport,
-      clearAllReports
+      clearAllReports,
+      restoreFullSession,
+      restoreReportsOnly
     }}>
       {children}
     </PatientContext.Provider>
