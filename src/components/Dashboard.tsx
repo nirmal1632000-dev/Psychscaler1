@@ -590,35 +590,20 @@ export const Dashboard: React.FC<DashboardProps> = ({ setActivePage, selectedCat
                 </p>
               </div>
 
-              {/* Footer details & Action */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                borderTop: '1px solid var(--border)',
-                paddingTop: '1rem',
-                marginTop: '0.5rem'
-              }}>
-                <div style={{ display: 'flex', gap: '1rem', color: 'var(--text-muted)', fontSize: '0.75rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                    <Clock size={12} />
-                    <span>{scale.timeEstimate}</span>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                    <UserCheck size={12} />
-                    <span>{scale.administeredBy}</span>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => setActivePage(scale.id)}
-                  className="btn btn-secondary"
-                  style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}
-                >
-                  <span>Open Tool</span>
-                  <ArrowRight size={12} />
-                </button>
-              </div>
+              {/* Big easy action for clinicians */}
+              <button
+                onClick={() => setActivePage(scale.id)}
+                className="btn btn-primary"
+                style={{ 
+                  width: "100%", 
+                  marginTop: "0.5rem",
+                  padding: "0.7rem 1rem",
+                  fontSize: "0.95rem",
+                  minHeight: "48px"
+                }}
+              >
+                Start {scale.name} →
+              </button>
             </div>
           );
         })}

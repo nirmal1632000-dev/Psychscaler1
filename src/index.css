@@ -757,3 +757,159 @@ h1, h2, h3, h4, h5, h6 {
     min-height: 36px;
   }
 }
+
+/* ============================================
+   AGGRESSIVE MOBILE-FIRST CLINICIAN UI
+   Make it easy and fast for doctors on phones
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Overall tighter, thumb-friendly layout */
+  :root {
+    --radius-lg: 12px;
+    --radius-md: 10px;
+  }
+
+  body {
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .workspace-body {
+    padding: 0.6rem 0.5rem !important;
+    max-width: 100% !important;
+  }
+
+  .glass-panel {
+    padding: 0.85rem !important;
+    margin-bottom: 0.75rem;
+    border-radius: 10px;
+    box-shadow: none !important;
+    border: 1px solid var(--border);
+  }
+
+  /* Big, easy to tap headers */
+  h1, .clinical-dossier-title {
+    font-size: 1.25rem !important;
+    line-height: 1.2 !important;
+  }
+
+  h2, h3 {
+    font-size: 1.05rem !important;
+    margin-bottom: 0.4rem !important;
+  }
+
+  /* Header - simpler and scrollable */
+  .header {
+    padding: 0.35rem 0.4rem !important;
+    height: auto !important;
+    min-height: 52px;
+    gap: 0.3rem !important;
+  }
+
+  .header button {
+    font-size: 0.72rem !important;
+    padding: 0.25rem 0.5rem !important;
+    min-height: 38px;
+    border-radius: 999px;
+  }
+
+  /* Large, thumb friendly buttons everywhere */
+  .btn {
+    min-height: 48px;
+    font-size: 0.9rem !important;
+    padding: 0.65rem 1rem !important;
+    gap: 0.5rem;
+  }
+
+  .btn-primary, .btn-teal {
+    font-size: 0.95rem !important;
+  }
+
+  /* Form inputs - big and easy */
+  .form-input, .form-select {
+    padding: 0.7rem 0.9rem !important;
+    font-size: 1rem !important;
+    min-height: 48px;
+    border-radius: 8px;
+  }
+
+  .form-label {
+    font-size: 0.75rem;
+    margin-bottom: 0.25rem;
+  }
+
+  /* Scale list / Dashboard cards - single column, big tap targets */
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4 {
+    grid-template-columns: 1fr !important;
+    gap: 0.6rem !important;
+  }
+
+  /* Scale cards in dashboard */
+  .scale-card {
+    padding: 0.9rem !important;
+  }
+
+  /* Patient setup and forms */
+  .form-group {
+    margin-bottom: 0.9rem;
+  }
+
+  /* Report Center specific */
+  .clinical-dossier-title {
+    font-size: 1.15rem !important;
+  }
+
+  .demographics-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.5rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Make action buttons stack vertically on mobile for clarity */
+  .no-print .btn {
+    width: 100%;
+    margin-bottom: 0.4rem;
+    justify-content: center;
+  }
+
+  /* Scoring tables */
+  .scoring-table th,
+  .scoring-table td {
+    padding: 0.45rem 0.5rem;
+    font-size: 0.82rem;
+  }
+
+  /* Reduce hero and fancy elements on mobile */
+  .hero, .editorial-hero {
+    padding: 1.25rem 0.5rem !important;
+  }
+}
+
+/* Even smaller phones */
+@media (max-width: 480px) {
+  .workspace-body {
+    padding: 0.4rem 0.35rem !important;
+  }
+
+  .glass-panel {
+    padding: 0.65rem !important;
+  }
+
+  .btn {
+    min-height: 46px;
+    font-size: 0.85rem !important;
+  }
+
+  .demographics-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Make the app feel faster and less restrictive */
+.app-container {
+  background: var(--bg-app);
+}
+

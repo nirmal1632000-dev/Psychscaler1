@@ -3,6 +3,7 @@ import { ThemeProvider } from './components/ThemeContext';
 import { PatientProvider } from './components/PatientContext';
 
 import { Header } from './components/Header';
+import { usePatient } from './components/PatientContext';
 import { Landing } from './components/Landing';
 import { Dashboard } from './components/Dashboard';
 import { PatientSetup } from './components/PatientSetup';
@@ -29,6 +30,7 @@ function AppContent() {
   const activePage = history[history.length - 1] || 'landing';
   
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<string>('all');
+  const { patient } = usePatient();
  
   const navigate = (page: string) => {
     setHistory(prev => [...prev, page]);
@@ -139,7 +141,38 @@ const renderActivePage = () => {
           goBack={goBack} 
           history={history} 
         />
-        <main className="workspace-body" style={{ flex: 1, width: '100%', maxWidth: '1200px', margin: '0 auto', padding: window.innerWidth < 768 ? '0.75rem' : '1.25rem' }}>
+        {/* Simple Patient Bar - easy to tap, least restrictive */}
+        <div style={{
+          background: "var(--bg-surface)",
+          borderBottom: "1px solid var(--border)",
+          padding: "0.4rem 0.75rem",
+          fontSize: "0.85rem",
+          display: "flex",
+          alignItems: "center",
+          gap: "0.5rem",
+          flexWrap: "wrap"
+        }} className="no-print">
+          <span style={{ color: "var(--text-muted)", fontWeight: 600 }}>Patient:</span>
+          <span style={{ fontWeight: 700, color: "var(--text-primary)" }}>
+            {patient.name || "Not set"}
+          </span>
+          <button 
+            onClick={() => navigate("patient-setup")}
+            style={{
+              marginLeft: "auto",
+              fontSize: "0.75rem",
+              padding: "0.2rem 0.6rem",
+              borderRadius: "999px",
+              border: "1px solid var(--border)",
+              background: "transparent",
+              cursor: "pointer"
+            }}
+          >
+            {patient.name ? "Edit" : "Set Patient"}
+          </button>
+        </div>
+
+        <main className="workspace-body" style={{ flex: 1, width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '0.75rem' }}>
           {renderActivePage()}
         </main>
       </div>

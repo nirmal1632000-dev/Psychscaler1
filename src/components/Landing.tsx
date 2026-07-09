@@ -64,12 +64,11 @@ export const Landing: React.FC<LandingProps> = ({ setActivePage, setSelectedCate
       {/* Editorial Welcome Hero */}
       <div style={{
         textAlign: 'center',
-        padding: '3rem 1.5rem',
-        borderBottom: '2px double var(--border)',
+        padding: '1.5rem 0.5rem',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: '1rem'
+        gap: '0.75rem'
       }}>
         <div style={{
           backgroundColor: 'var(--primary-light)',
