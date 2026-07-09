@@ -25,9 +25,9 @@ export const ReportCenter: React.FC = () => {
   // === Export functionality for hospital staff ===
   const downloadJSON = (data: any, filename: string) => {
     const jsonStr = JSON.stringify(data, null, 2);
-    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const blob = new Blob([jsonStr], { type: "application/json" });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = url;
     link.download = filename;
     document.body.appendChild(link);
@@ -41,9 +41,9 @@ export const ReportCenter: React.FC = () => {
       exportedAt: new Date().toISOString(),
       patient,
       reports,
-      version: 'PsychScaler-0.1'
+      version: "PsychScaler-0.1"
     };
-    const safeName = (patient.name || 'patient').replace(/[^a-z0-9]/gi, '_');
+    const safeName = (patient.name || "patient").replace(/[^a-z0-9]/gi, "_");
     downloadJSON(sessionData, `PsychScaler_${safeName}_${new Date().toISOString().slice(0,10)}.json`);
   };
 
@@ -58,34 +58,33 @@ export const ReportCenter: React.FC = () => {
       },
       reports
     };
-    const safeName = (patient.name || 'patient').replace(/[^a-z0-9]/gi, '_');
+    const safeName = (patient.name || "patient").replace(/[^a-z0-9]/gi, "_");
+    downloadJSON(reportsData, `PsychScaler_Reports_${safeName}_${new Date().toISOString().slice(0,10)}.json`);
+  };
 
-  const handleRestoreBackup = (event) => {
+  const handleRestoreBackup = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
     const reader = new FileReader();
     reader.onload = (e) => {
       try {
-        const data = JSON.parse(e.target.result);
+        const data = JSON.parse(e.target.result as string);
         if (data.patient && data.reports) {
           restoreFullSession(data);
-          alert("Full session restored successfully! The page will reflect the loaded data.");
+          alert("Full session restored successfully!");
         } else if (data.reports) {
           restoreReportsOnly(data);
           alert("Reports restored successfully!");
         } else {
-          alert("Invalid backup file. The file must contain patient and/or reports data.");
+          alert("Invalid backup file.");
         }
       } catch (err) {
-        alert("Failed to read the backup file. Make sure it is a valid PsychScaler JSON export.");
+        alert("Failed to read the backup file.");
       }
     };
     reader.readAsText(file);
-    event.target.value = ""; // reset input
-  };
-
-      downloadJSON(reportsData, `PsychScaler_Reports_${safeName}_${new Date().toISOString().slice(0,10)}.json`);
+    event.target.value = "";
   };
 
   return (
