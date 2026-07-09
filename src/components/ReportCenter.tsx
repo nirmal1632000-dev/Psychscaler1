@@ -68,8 +68,10 @@ export const ReportCenter: React.FC = () => {
 
     const reader = new FileReader();
     reader.onload = (e) => {
+      const target = e.target;
+      if (!target || typeof target.result !== "string") return;
       try {
-        const data = JSON.parse(e.target.result as string);
+        const data = JSON.parse(target.result);
         if (data.patient && data.reports) {
           restoreFullSession(data);
           alert("Full session restored successfully!");
