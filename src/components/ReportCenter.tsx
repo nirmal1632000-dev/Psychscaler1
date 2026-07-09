@@ -199,7 +199,7 @@ export const ReportCenter: React.FC = () => {
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '2px solid var(--border)', paddingBottom: '1rem', marginBottom: '1.5rem' }}>
               <div>
-                <h1 style={{ fontSize: '2rem', fontFamily: 'var(--font-display)', margin: 0 }}>CLINICAL ASSESSMENT DOSSIER</h1>
+                <h1 style={{ fontSize: '1.35rem', fontFamily: 'var(--font-display)', margin: 0 }}>CLINICAL ASSESSMENT DOSSIER</h1>
                 <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>PsychScaler Standardized Reporting System</span>
               </div>
               <div style={{ textAlign: 'right', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
@@ -211,7 +211,7 @@ export const ReportCenter: React.FC = () => {
             {/* Demographics grid */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
               gap: '1.25rem',
               fontSize: '0.875rem'
             }} className="grid-cols-4">

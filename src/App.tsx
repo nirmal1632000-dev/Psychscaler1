@@ -139,7 +139,7 @@ const renderActivePage = () => {
           goBack={goBack} 
           history={history} 
         />
-        <main className="workspace-body" style={{ flex: 1, width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '1.5rem' }}>
+        <main className="workspace-body" style={{ flex: 1, width: '100%', maxWidth: '1200px', margin: '0 auto', padding: window.innerWidth < 768 ? '0.75rem' : '1.25rem' }}>
           {renderActivePage()}
         </main>
       </div>
